@@ -13,7 +13,7 @@ const Proposition = () => {
       const normalizedPhrase = phrase.toLowerCase().trim();
       
       // Vérifier si la phrase contient "enceinte" ou "grossesse"
-      if (normalizedPhrase.includes('enceinte') || normalizedPhrase.includes('grossesse')) {
+      if (normalizedPhrase.includes('enceinte') || normalizedPhrase.includes('grossesse') || normalizedPhrase.includes('bébé')) {
         navigate('/bravo');
       } else {
         // Déclencher l'animation de secousse et vider le champ

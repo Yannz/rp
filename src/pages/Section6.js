@@ -220,7 +220,7 @@ const Section6 = () => {
     <div className="section6-container">
       <div className="section6-content">
         <h1 className="section6-title">Votre mémoire maintenant</h1>
-        <p>Romane peut dire quelques dingueries, a vous de glissez et déposez les phrases dans l'ordre chronologique (de la plus récente à la plus ancienne)</p>
+        <p>Romane peut dire quelques dingueries, à vous de glissez et déposez les phrases dans l'ordre chronologique (de la plus récente à la plus ancienne)</p>
         {isMobile && (
           <div className="mobile-instructions">
             <p><strong>📱 Instructions mobile :</strong></p>

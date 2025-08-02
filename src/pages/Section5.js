@@ -154,7 +154,7 @@ const Section5 = () => {
       <div className="section5-content">
         <h1 className="section5-title">Testons un peu plus votre logique</h1>
         <p>C'est une façon de m'assurer que vous êtes prêts pour la suite...</p>
-        <p>Aux noirs de jouer</p>
+        <p>Aux noirs de jouer, faites échec et mat en 2 coups</p>
         {isMobile && (
           <p className="mobile-instructions">Tapez sur une pièce noire pour la sélectionner, puis sur la case de destination</p>
         )}
