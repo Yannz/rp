@@ -1,16 +1,18 @@
 .section6-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background: #0d1117;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
+  overflow-y: auto;
 }
 
 .section6-content {
   width: 100%;
-  height: 100%;
+  max-width: 1200px;
+  min-height: 100vh;
   background: #0d1117;
   text-align: center;
   position: relative;
@@ -18,8 +20,10 @@
   animation: slideInUp 0.8s ease-out;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 2rem;
+  padding-top: 3rem;
+  box-sizing: border-box;
 }
 
 .section6-title {
@@ -100,11 +104,103 @@
   cursor: grabbing;
 }
 
+.phrase-item.selected {
+  background: #ffd700 !important;
+  color: #000 !important;
+  border-color: #ff6b35 !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.phrase-item.mobile-phrase {
+  cursor: pointer;
+  touch-action: none;
+}
+
+.phrases-container.mobile-container {
+  cursor: pointer;
+}
+
+.phrases-container.mobile-container:active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-instructions {
+  color: #ffd700 !important;
+  font-size: 0.9rem !important;
+  font-weight: 500;
+  margin-bottom: 1rem !important;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  text-align: left;
+}
+
+.mobile-instructions p {
+  margin: 0.3rem 0 !important;
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+.mobile-remove-btn {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid #ff6b6b;
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: auto;
+  color: #ff6b6b;
+}
+
+.mobile-remove-btn:hover,
+.mobile-remove-btn:active {
+  background: rgba(255, 107, 107, 0.3);
+  transform: scale(1.1);
+}
+
 .phrase-item.sorted {
   background: #30363d;
   border-color: #8b949e;
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
+
+.phrase-text {
+  flex: 1;
+}
+
+.mobile-drop-zone {
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background: rgba(139, 148, 158, 0.1);
+  border: 1px dashed #8b949e;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #8b949e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-drop-zone:hover,
+.mobile-drop-zone:active {
+  background: rgba(139, 148, 158, 0.2);
+  border-color: #c9d1d9;
+  color: #c9d1d9;
+}
+
+.mobile-drop-zone.top {
+  margin-bottom: 0.5rem;
+}
+
+.mobile-drop-zone.bottom {
+  margin-top: 0.5rem;
+}
+
 
 .drop-indicator-top,
 .drop-indicator-bottom {
@@ -211,31 +307,83 @@
 }
 
 @media (max-width: 768px) {
+  .section6-container {
+    padding: 1rem;
+  }
+  
+  .section6-content {
+    padding: 1rem;
+    padding-top: 2rem;
+    min-height: auto;
+  }
+  
   .section6-title {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
   }
   
   .section6-content p {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
   }
   
   .sorting-area {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
   }
   
   .phrases-container {
-    min-height: 200px;
+    min-height: 150px;
+    padding: 0.75rem;
+  }
+  
+  .phrase-item {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.9rem;
   }
   
   .controls {
     flex-direction: column;
     align-items: center;
+    margin: 1.5rem 0;
   }
   
   .check-btn,
   .reset-btn {
     width: 200px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .available-phrases h3,
+  .sorted-phrases h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section6-content {
+    padding: 0.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  .section6-title {
+    font-size: 1.8rem;
+  }
+  
+  .section6-content p {
+    font-size: 0.9rem;
+  }
+  
+  .phrases-container {
+    min-height: 120px;
+    padding: 0.5rem;
+  }
+  
+  .phrase-item {
+    padding: 0.6rem;
+    font-size: 0.85rem;
   }
 }
 

@@ -23,6 +23,8 @@ const Section6 = () => {
   const [isCorrect, setIsCorrect] = useState(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [selectedPhrase, setSelectedPhrase] = useState(null);
 
   const handleDragStart = (e, phrase) => {
     setDraggedItem(phrase);
@@ -124,6 +126,94 @@ const Section6 = () => {
     setIsCorrect(null);
     setCorrectCount(0);
     setIsShaking(false);
+    setSelectedPhrase(null);
+  };
+
+  // Détecter si on est sur mobile
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Gestion des clics pour mobile
+  const handlePhraseClick = (phrase) => {
+    if (!isMobile) return;
+    
+    // Si c'est une phrase disponible, l'ajouter directement à la pile
+    if (availablePhrases.find(p => p.id === phrase.id)) {
+      setSortedPhrases(prev => [...prev, phrase]);
+      setAvailablePhrases(prev => prev.filter(p => p.id !== phrase.id));
+      setIsCorrect(null);
+      return;
+    }
+    
+    // Si c'est une phrase dans la pile, la sélectionner pour réorganisation
+    if (selectedPhrase && selectedPhrase.id === phrase.id) {
+      // Désélectionner si on clique sur la même phrase
+      setSelectedPhrase(null);
+    } else {
+      setSelectedPhrase(phrase);
+    }
+  };
+
+  const handleContainerClick = (targetContainer, targetIndex = null) => {
+    if (!isMobile || !selectedPhrase) return;
+    
+    if (targetContainer === 'sorted') {
+      // Déplacer vers la pile triée
+      if (availablePhrases.find(p => p.id === selectedPhrase.id)) {
+        // Depuis phrases disponibles vers pile triée
+        setSortedPhrases(prev => {
+          const newArray = [...prev];
+          const insertIndex = targetIndex !== null ? targetIndex : newArray.length;
+          newArray.splice(insertIndex, 0, selectedPhrase);
+          return newArray;
+        });
+        setAvailablePhrases(prev => prev.filter(p => p.id !== selectedPhrase.id));
+      } else if (sortedPhrases.find(p => p.id === selectedPhrase.id)) {
+        // Réorganiser dans la pile triée
+        setSortedPhrases(prev => {
+          const currentIndex = prev.findIndex(p => p.id === selectedPhrase.id);
+          const newArray = prev.filter(p => p.id !== selectedPhrase.id);
+          const insertIndex = targetIndex !== null ? targetIndex : newArray.length;
+          newArray.splice(insertIndex, 0, selectedPhrase);
+          return newArray;
+        });
+      }
+    } else if (targetContainer === 'available') {
+      // Remettre dans les phrases disponibles
+      if (sortedPhrases.find(p => p.id === selectedPhrase.id)) {
+        setAvailablePhrases(prev => [...prev, selectedPhrase].sort((a, b) => a.id - b.id));
+        setSortedPhrases(prev => prev.filter(p => p.id !== selectedPhrase.id));
+      }
+    }
+    
+    setSelectedPhrase(null);
+    setIsCorrect(null);
+  };
+
+  // Gestion du clic sur une position spécifique dans la pile
+  const handleSortedPositionClick = (e, targetIndex) => {
+    if (!isMobile || !selectedPhrase) return;
+    e.stopPropagation();
+    
+    if (sortedPhrases.find(p => p.id === selectedPhrase.id)) {
+      // Réorganiser dans la pile triée
+      setSortedPhrases(prev => {
+        const currentIndex = prev.findIndex(p => p.id === selectedPhrase.id);
+        if (currentIndex === targetIndex) return prev; // Même position
+        
+        const newArray = prev.filter(p => p.id !== selectedPhrase.id);
+        newArray.splice(targetIndex, 0, selectedPhrase);
+        return newArray;
+      });
+      setSelectedPhrase(null);
+      setIsCorrect(null);
+    }
   };
 
   return (
@@ -131,22 +221,36 @@ const Section6 = () => {
       <div className="section6-content">
         <h1 className="section6-title">Votre mémoire maintenant</h1>
         <p>Romane peut dire quelques dingueries, a vous de glissez et déposez les phrases dans l'ordre chronologique (de la plus récente à la plus ancienne)</p>
+        {isMobile && (
+          <div className="mobile-instructions">
+            <p><strong>📱 Instructions mobile :</strong></p>
+            <p>• Tapez sur une phrase disponible → ajoutée automatiquement à la pile</p>
+            <p>• Tapez sur une phrase de la pile → sélection pour repositionnement</p>
+            <p>• Tapez sur "Placer en position X" pour repositionner</p>
+          </div>
+        )}
         
         <div className="sorting-area">
           {/* Zone des phrases disponibles */}
           <div className="available-phrases">
             <h3>Phrases disponibles</h3>
             <div 
-              className="phrases-container available-container"
-              onDragOver={handleDragOver}
-              onDrop={handleDropOnAvailable}
+              className={`phrases-container available-container ${
+                isMobile ? 'mobile-container' : ''
+              }`}
+              onDragOver={!isMobile ? handleDragOver : undefined}
+              onDrop={!isMobile ? handleDropOnAvailable : undefined}
+              onClick={isMobile ? () => handleContainerClick('available') : undefined}
             >
               {availablePhrases.map(phrase => (
                 <div
                   key={phrase.id}
-                  className="phrase-item"
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, phrase)}
+                  className={`phrase-item ${
+                    selectedPhrase && selectedPhrase.id === phrase.id ? 'selected' : ''
+                  } ${isMobile ? 'mobile-phrase' : ''}`}
+                  draggable={!isMobile}
+                  onDragStart={!isMobile ? (e) => handleDragStart(e, phrase) : undefined}
+                  onClick={() => handlePhraseClick(phrase)}
                 >
                   {phrase.text}
                 </div>
@@ -158,9 +262,12 @@ const Section6 = () => {
           <div className="sorted-phrases">
             <h3>Ordre chronologique (plus récente en haut)</h3>
             <div 
-              className={`phrases-container sorted-container ${isShaking ? 'shake' : ''}`}
-              onDragOver={handleDragOver}
-              onDrop={handleDropOnSorted}
+              className={`phrases-container sorted-container ${isShaking ? 'shake' : ''} ${
+                isMobile ? 'mobile-container' : ''
+              }`}
+              onDragOver={!isMobile ? handleDragOver : undefined}
+              onDrop={!isMobile ? handleDropOnSorted : undefined}
+              onClick={isMobile ? () => handleContainerClick('sorted') : undefined}
             >
               {sortedPhrases.length === 0 && (
                 <div className="drop-zone-placeholder">
@@ -168,37 +275,79 @@ const Section6 = () => {
                 </div>
               )}
               {sortedPhrases.map((phrase, index) => (
-                <div
-                  key={phrase.id}
-                  className="phrase-item sorted"
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, phrase)}
-                  onDragOver={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                  onDrop={(e) => {
-                    e.stopPropagation();
-                    handleDropOnSorted(e, index);
-                  }}
-                >
-                  <span className="position-number">{index + 1}.</span>
-                  {phrase.text}
-                  <div className="drop-indicator-top" 
-                       onDragOver={(e) => e.preventDefault()}
-                       onDrop={(e) => {
-                         e.stopPropagation();
-                         handleDropOnSorted(e, index);
-                       }}
-                  ></div>
-                  <div className="drop-indicator-bottom"
-                       onDragOver={(e) => e.preventDefault()}
-                       onDrop={(e) => {
-                         e.stopPropagation();
-                         handleDropOnSorted(e, index + 1);
-                       }}
-                  ></div>
-                </div>
+                <React.Fragment key={phrase.id}>
+                  {/* Zone de drop au-dessus (mobile) */}
+                  {isMobile && index === 0 && (
+                    <div 
+                      className="mobile-drop-zone top"
+                      onClick={(e) => handleSortedPositionClick(e, 0)}
+                    >
+                      Placer en position 1
+                    </div>
+                  )}
+                  
+                  <div
+                    className={`phrase-item sorted ${
+                      selectedPhrase && selectedPhrase.id === phrase.id ? 'selected' : ''
+                    } ${isMobile ? 'mobile-phrase' : ''}`}
+                    draggable={!isMobile}
+                    onDragStart={!isMobile ? (e) => handleDragStart(e, phrase) : undefined}
+                    onDragOver={!isMobile ? (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    } : undefined}
+                    onDrop={!isMobile ? (e) => {
+                      e.stopPropagation();
+                      handleDropOnSorted(e, index);
+                    } : undefined}
+                    onClick={() => handlePhraseClick(phrase)}
+                  >
+                    <span className="position-number">{index + 1}.</span>
+                    <span className="phrase-text">{phrase.text}</span>
+                    {isMobile && (
+                      <button 
+                        className="mobile-remove-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAvailablePhrases(prev => [...prev, phrase].sort((a, b) => a.id - b.id));
+                          setSortedPhrases(prev => prev.filter(p => p.id !== phrase.id));
+                          setSelectedPhrase(null);
+                          setIsCorrect(null);
+                        }}
+                      >
+                        ↩️
+                      </button>
+                    )}
+                    {!isMobile && (
+                      <>
+                        <div className="drop-indicator-top" 
+                             onDragOver={(e) => e.preventDefault()}
+                             onDrop={(e) => {
+                               e.stopPropagation();
+                               handleDropOnSorted(e, index);
+                             }}
+                        ></div>
+                        <div className="drop-indicator-bottom"
+                             onDragOver={(e) => e.preventDefault()}
+                             onDrop={(e) => {
+                               e.stopPropagation();
+                               handleDropOnSorted(e, index + 1);
+                             }}
+                        ></div>
+                      </>
+                    )}
+                  </div>
+                  
+                  {/* Zone de drop en-dessous (mobile) */}
+                  {isMobile && (
+                    <div 
+                      className="mobile-drop-zone bottom"
+                      onClick={(e) => handleSortedPositionClick(e, index + 1)}
+                    >
+                      Placer en position {index + 2}
+                    </div>
+                  )}
+                </React.Fragment>
               ))}
             </div>
           </div>
