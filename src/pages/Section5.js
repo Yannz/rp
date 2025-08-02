@@ -24,8 +24,8 @@ const Section5 = () => {
   const [draggedPiece, setDraggedPiece] = useState(null);
   const [moveCount, setMoveCount] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
-  const [touchStart, setTouchStart] = useState(null);
   const [selectedSquare, setSelectedSquare] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const pieceSymbols = {
     'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
@@ -42,30 +42,18 @@ const Section5 = () => {
     }
   };
 
-  const handleTouchStart = (e, row, col) => {
-    e.preventDefault();
-    const piece = board[row][col];
-    if (piece && piece.startsWith('b') && gameState === 'playing') {
-      setTouchStart({ row, col });
-      setSelectedSquare({ row, col });
-    }
-  };
+  // Détecter si on est sur mobile
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-  const handleTouchEnd = (e, row, col) => {
+  const handleSquareClick = (e, row, col) => {
     e.preventDefault();
-    if (touchStart && selectedSquare) {
-      if (touchStart.row !== row || touchStart.col !== col) {
-        // Mouvement détecté
-        const piece = board[touchStart.row][touchStart.col];
-        setDraggedPiece({ piece, fromRow: touchStart.row, fromCol: touchStart.col });
-        handleDrop(e, row, col);
-      }
-    }
-    setTouchStart(null);
-    setSelectedSquare(null);
-  };
-
-  const handleSquareClick = (row, col) => {
     const piece = board[row][col];
     
     if (selectedSquare) {
@@ -167,6 +155,9 @@ const Section5 = () => {
         <h1 className="section5-title">Testons un peu plus votre logique</h1>
         <p>C'est une façon de m'assurer que vous êtes prêts pour la suite...</p>
         <p>Aux noirs de jouer</p>
+        {isMobile && (
+          <p className="mobile-instructions">Tapez sur une pièce noire pour la sélectionner, puis sur la case de destination</p>
+        )}
         
         {gameState !== 'won' && (
           <div className={`chess-board ${isShaking ? 'shake' : ''}`}>
@@ -176,18 +167,21 @@ const Section5 = () => {
                   key={`${rowIndex}-${colIndex}`}
                   className={`chess-square ${(rowIndex + colIndex) % 2 === 0 ? 'light' : 'dark'} ${
                     selectedSquare && selectedSquare.row === rowIndex && selectedSquare.col === colIndex ? 'selected' : ''
-                  }`}
-                  onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
-                  onClick={() => handleSquareClick(rowIndex, colIndex)}
-                  onTouchEnd={(e) => handleTouchEnd(e, rowIndex, colIndex)}
+                  } ${isMobile ? 'mobile-interaction' : ''}`}
+                  onDragOver={!isMobile ? handleDragOver : undefined}
+                  onDrop={!isMobile ? (e) => handleDrop(e, rowIndex, colIndex) : undefined}
+                  onClick={(e) => handleSquareClick(e, rowIndex, colIndex)}
+                  onTouchStart={(e) => {
+                    if (isMobile) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   {piece && (
                     <div
-                      className={`chess-piece ${piece.startsWith('b') ? 'draggable' : ''}`}
-                      draggable={piece.startsWith('b') && gameState === 'playing'}
-                      onDragStart={(e) => handleDragStart(e, rowIndex, colIndex)}
-                      onTouchStart={(e) => handleTouchStart(e, rowIndex, colIndex)}
+                      className={`chess-piece ${piece.startsWith('b') ? 'draggable' : ''} ${isMobile ? 'mobile-piece' : ''}`}
+                      draggable={!isMobile && piece.startsWith('b') && gameState === 'playing'}
+                      onDragStart={!isMobile ? (e) => handleDragStart(e, rowIndex, colIndex) : undefined}
                     >
                       {pieceSymbols[piece]}
                     </div>
