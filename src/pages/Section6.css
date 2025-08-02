@@ -1,0 +1,263 @@
+.section6-container {
+  height: 100vh;
+  width: 100vw;
+  background: #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.section6-content {
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.section6-title {
+  font-size: 3.5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.section6-content p {
+  font-size: 1.3rem;
+  color: #c9d1d9;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sorting-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.available-phrases h3,
+.sorted-phrases h3 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.phrases-container {
+  min-height: 300px;
+  border: 2px solid #30363d;
+  border-radius: 10px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.available-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: flex-start;
+}
+
+.sorted-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.phrase-item {
+  background: #21262d;
+  color: #ffffff;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;
+  transition: all 0.3s ease;
+  border: 1px solid #30363d;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.phrase-item:hover {
+  background: #30363d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.phrase-item:active {
+  cursor: grabbing;
+}
+
+.phrase-item.sorted {
+  background: #30363d;
+  border-color: #8b949e;
+  position: relative;
+}
+
+.drop-indicator-top,
+.drop-indicator-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  z-index: 10;
+}
+
+.drop-indicator-top {
+  top: -5px;
+}
+
+.drop-indicator-bottom {
+  bottom: -5px;
+}
+
+.drop-indicator-top:hover,
+.drop-indicator-bottom:hover {
+  background: rgba(139, 148, 158, 0.2);
+  border: 1px dashed #8b949e;
+}
+
+.position-number {
+  color: #8b949e;
+  font-weight: bold;
+  min-width: 1.5rem;
+}
+
+.drop-zone-placeholder {
+  text-align: center;
+  color: #8b949e;
+  font-style: italic;
+  padding: 2rem;
+  border: 2px dashed #30363d;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.check-btn,
+.reset-btn {
+  background: #21262d;
+  color: #ffffff;
+  border: 2px solid #30363d;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.check-btn {
+  border-color: #00ff00;
+}
+
+.check-btn:hover {
+  background: rgba(0, 255, 0, 0.1);
+  border-color: #00ff00;
+  color: #00ff00;
+}
+
+.reset-btn {
+  border-color: #ff6b6b;
+}
+
+.reset-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.result {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.result.success {
+  background: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
+  border: 1px solid #00ff00;
+}
+
+.result.error {
+  background: rgba(255, 187, 0, 0.1);
+  color: #ffbb00;
+  border: 1px solid #ffbb00;
+}
+
+.sorted-container.shake {
+  animation: shake 0.6s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .section6-title {
+    font-size: 2.5rem;
+  }
+  
+  .section6-content p {
+    font-size: 1.1rem;
+  }
+  
+  .sorting-area {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .phrases-container {
+    min-height: 200px;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .check-btn,
+  .reset-btn {
+    width: 200px;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}

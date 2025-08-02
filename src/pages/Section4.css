@@ -1,0 +1,223 @@
+.section4-container {
+  height: 100vh;
+  width: 100vw;
+  background: #0d1117;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.section4-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.01) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.section4-content {
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.enigma-header {
+  margin-bottom: 3rem;
+}
+
+.section4-title {
+  font-size: 3.5rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.mystery-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cryptic-message {
+  background: #21262d;
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  border: 1px solid #30363d;
+  box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cryptic-text {
+  font-family: 'Courier New', monospace;
+  font-size: 1.4rem;
+  color: #00ff00;
+  line-height: 1.8;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.answer-form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.answer-label {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.answer-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  border: 2px solid #30363d;
+  border-radius: 25px;
+  background: #21262d;
+  color: #ffffff;
+  text-align: center;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.answer-input:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  background: #21262d;
+}
+
+.answer-input.shake {
+  animation: shake 0.6s ease-in-out;
+  border-color: #ff0000;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.submit-btn {
+  background: #21262d;
+  color: #ffffff;
+  border: 2px solid #30363d;
+  padding: 1rem 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  background: #30363d;
+  border-color: #ffffff;
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.hint-section {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 1px solid #30363d;
+}
+
+.hint-text {
+  font-size: 1rem;
+  color: #8b949e;
+  margin: 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .section4-container {
+    padding: 1rem;
+  }
+  
+  .section4-content {
+    padding: 2rem;
+  }
+  
+  .section4-title {
+    font-size: 2.5rem;
+  }
+  
+  .mystery-icon {
+    font-size: 2.5rem;
+  }
+  
+  .cryptic-text {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .answer-input {
+    font-size: 1rem;
+    padding: 0.8rem 1.2rem;
+  }
+  
+  .submit-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-10px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(10px);
+  }
+}
+

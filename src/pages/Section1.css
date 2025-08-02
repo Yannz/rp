@@ -1,0 +1,208 @@
+.section1-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--primary-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.section1-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 38, 84, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 38, 84, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.section1-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--primary-white);
+  position: relative;
+  z-index: 1;
+}
+
+.section1-image-container {
+  margin-bottom: 2.5rem;
+}
+
+.section1-placeholder-image {
+  width: 200px;
+  height: 200px;
+  background: var(--primary-blue);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 15px 35px rgba(0, 38, 84, 0.3);
+  transition: all 0.3s ease;
+  border: 4px solid var(--primary-white);
+}
+
+.section1-placeholder-image:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 20px 45px rgba(0, 38, 84, 0.5);
+}
+
+.image-icon {
+  font-size: 4rem;
+  color: var(--primary-white);
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.section1-text-content {
+  width: 100%;
+}
+
+.section1-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
+}
+
+.section1-subtitle {
+  font-size: 1.4rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+}
+
+.section1-start-button {
+  background: var(--primary-blue);
+  color: var(--primary-white);
+  border: none;
+  padding: 1.2rem 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(0, 38, 84, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.section1-start-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.section1-start-button:hover::before {
+  left: 100%;
+}
+
+.section1-start-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 38, 84, 0.5);
+  background: rgba(0, 38, 84, 0.9);
+}
+
+.section1-start-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 38, 84, 0.4);
+}
+
+.section1-footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.section1-hint {
+  color: var(--text-gray);
+  font-size: 1rem;
+  background: var(--primary-white);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 38, 84, 0.1);
+}
+
+@media (max-width: 768px) {
+  .section1-container {
+    padding: 1rem;
+  }
+  
+  .section1-content {
+    padding: 2rem;
+  }
+  
+  .section1-title {
+    font-size: 2.5rem;
+  }
+  
+  .section1-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .section1-placeholder-image {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .image-icon {
+    font-size: 3rem;
+  }
+  
+  .section1-start-button {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+  }
+  
+  .section1-hint {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section1-content {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.section1-footer {
+  animation: fadeInUp 1.2s ease-out;
+}
