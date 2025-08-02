@@ -17,11 +17,14 @@ const Section3Enigmes = () => {
       <div className="section3-enigmes-content">
         <h1 className="section3-enigmes-title">Oh non, ça bug...</h1>
         <p>
-          On dirait que quelqu'un ou qu'une institution gouvernementale ne veut pas que ça se sache. Mais vous n'allez pas vous laisser intimider ! 
-          On va trouver un moyen pour faire passer l'info mais ça va vous demander un peu de concentration. Si vous êtes prêts, on y va !
+          On dirait que quelqu'un ou qu'une institution gouvernementale ne veut pas que ça se sache. <br />Mais on va pas se laisser intimider !<br />
+          Avec un peu de concentration, on va trouver un moyen pour vous faire passer l'info.
+        </p>
+        <p>
+          Si vous êtes prêts, on y va !
         </p>
         <button onClick={handleContinue} className="continue-btn">
-          Ouaiiiiis !
+          J'me tire une bûche et je suis prêt !
         </button>
       </div>
     </div>

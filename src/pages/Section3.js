@@ -11,9 +11,9 @@ const Section3 = () => {
   const [isHacked, setIsHacked] = useState(false);
 
   const lines = [
-    "On vous avez dit qu'on ne voulait pas rester au Canada, pas au delà de notre visa actuel.",
-    "Mais il faut savoir qu'en ce moment, des VISA valides en cours sont annulés par l'immigration.",
-    "Au cas où, on a quand même lancé des démarches" 
+    "Nous vous avions dit qu'on ne voulait pas rester au Canada, pas au delà de notre VISA actuel.",
+    "Mais il faut savoir qu'en ce moment, des VISA en cours de validité sont annulés par l'immigration.",
+    "On a quand même lancé quelques démarches..." 
   ];
 
   const showNextLine = (lineIndex) => {

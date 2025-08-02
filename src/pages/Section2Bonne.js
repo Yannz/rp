@@ -34,14 +34,13 @@ const Section2Bonne = () => {
         <div className="news-content">
           <div className="news-card">
             <p>
-              Comme ça on sera tranquille.
+              C'est sûr que ce genre de démarches change un peu nos perspectives. On pourra plus facilement se projeter sans stresse. Et puis, comme ça, on sera tranquille.
             </p>
           </div>
 
           <div className="action-section">
             <button className="continue-btn" onClick={handleContinue}>
               <span>Ok et après ?</span>
-              <span className="arrow">→</span>
             </button>
           </div>
         </div>

@@ -17,25 +17,24 @@ const Section1 = () => {
       <div className="section1-content">
         <div className="section1-image-container">
           <div className="section1-placeholder-image">
-            <span className="image-icon">🎭</span>
+            <span className="image-icon">🤯</span>
           </div>
         </div>
         
         <div className="section1-text-content">
           <h1 className="section1-title">
-            Bienvenue dans cette Aventure
+            On a quelque chose à vous dire...
           </h1>
           
           <p className="section1-subtitle">
-            Une expérience interactive vous attend. Suivez les indices, 
-            résolvez les énigmes et découvrez ce qui vous attend...
+            C'est un peu trop sensible pour vous l'annoncer comme ça. On doit s'assurer qu'on donne cette information aux bonnes personnes...
           </p>
           
           <button 
             className="section1-start-button"
             onClick={handleStartJourney}
           >
-            Commencer l'Aventure
+            OK c'est tout moi ça
           </button>
         </div>
       </div>

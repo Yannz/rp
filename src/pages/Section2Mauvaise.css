@@ -65,6 +65,8 @@
   border-radius: 20px;
   padding: 2.5rem;
   box-shadow: 0 8px 25px rgba(183, 20, 20, 0.1);
+  width: 75%;
+  margin: auto;
 }
 
 .news-card p {

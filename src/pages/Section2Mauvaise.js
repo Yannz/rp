@@ -34,15 +34,14 @@ const Section2Mauvaise = () => {
         <div className="news-content">
           <div className="news-card">
             <p>
-              Vous aurez peut être encore l'occasion (ou l'obligation) de venir nous voir au Canada !
+              Vous aurez peut être encore devoir venir nous voir au Canada ! Et le temps que ça se fasse, on risque d'avoir les mêmes problèmes que les deux dernières années. Pas de certitude pour Noël...
             </p>
           </div>
         </div>
 
       <div className="action-section">
         <button className="continue-btn" onClick={handleContinue}>
-          <span>Affronter la réalité</span>
-          <span className="arrow">→</span>
+          <span>Aïe OK j'ai compris</span>
         </button>
       </div>
     </div>

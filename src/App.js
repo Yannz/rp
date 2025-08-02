@@ -15,6 +15,7 @@ import Section5Indice from './pages/Section5Indice';
 import Section6 from './pages/Section6';
 import Section6Indice from './pages/Section6Indice';
 import Proposition from './pages/Proposition';
+import Bravo from './pages/Bravo';
 import './App.css';
 
 function App() {
@@ -121,6 +122,7 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+            <Route path="/bravo" element={<Bravo />} />
             <Route path="*" element={<Navigate to="/section1" replace />} />
           </Routes>
         </div>
