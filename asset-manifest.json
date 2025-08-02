@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/genially-clone/static/css/main.07ca55a0.css",
+    "main.js": "/genially-clone/static/js/main.578c3832.js",
+    "static/js/453.56942ca1.chunk.js": "/genially-clone/static/js/453.56942ca1.chunk.js",
+    "index.html": "/genially-clone/index.html",
+    "main.07ca55a0.css.map": "/genially-clone/static/css/main.07ca55a0.css.map",
+    "main.578c3832.js.map": "/genially-clone/static/js/main.578c3832.js.map",
+    "453.56942ca1.chunk.js.map": "/genially-clone/static/js/453.56942ca1.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.07ca55a0.css",
+    "static/js/main.578c3832.js"
+  ]
+}
