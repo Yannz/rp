@@ -24,6 +24,8 @@ const Section5 = () => {
   const [draggedPiece, setDraggedPiece] = useState(null);
   const [moveCount, setMoveCount] = useState(0);
   const [isShaking, setIsShaking] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [selectedSquare, setSelectedSquare] = useState(null);
 
   const pieceSymbols = {
     'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
@@ -37,6 +39,54 @@ const Section5 = () => {
       e.dataTransfer.effectAllowed = 'move';
     } else {
       e.preventDefault();
+    }
+  };
+
+  const handleTouchStart = (e, row, col) => {
+    e.preventDefault();
+    const piece = board[row][col];
+    if (piece && piece.startsWith('b') && gameState === 'playing') {
+      setTouchStart({ row, col });
+      setSelectedSquare({ row, col });
+    }
+  };
+
+  const handleTouchEnd = (e, row, col) => {
+    e.preventDefault();
+    if (touchStart && selectedSquare) {
+      if (touchStart.row !== row || touchStart.col !== col) {
+        // Mouvement détecté
+        const piece = board[touchStart.row][touchStart.col];
+        setDraggedPiece({ piece, fromRow: touchStart.row, fromCol: touchStart.col });
+        handleDrop(e, row, col);
+      }
+    }
+    setTouchStart(null);
+    setSelectedSquare(null);
+  };
+
+  const handleSquareClick = (row, col) => {
+    const piece = board[row][col];
+    
+    if (selectedSquare) {
+      // Il y a déjà une pièce sélectionnée
+      if (selectedSquare.row === row && selectedSquare.col === col) {
+        // Clic sur la même case, on désélectionne
+        setSelectedSquare(null);
+      } else {
+        // Clic sur une case différente, on tente le mouvement
+        const selectedPiece = board[selectedSquare.row][selectedSquare.col];
+        if (selectedPiece && selectedPiece.startsWith('b')) {
+          setDraggedPiece({ piece: selectedPiece, fromRow: selectedSquare.row, fromCol: selectedSquare.col });
+          handleDrop({ preventDefault: () => {} }, row, col);
+        }
+        setSelectedSquare(null);
+      }
+    } else {
+      // Aucune pièce sélectionnée
+      if (piece && piece.startsWith('b') && gameState === 'playing') {
+        setSelectedSquare({ row, col });
+      }
     }
   };
 
@@ -124,15 +174,20 @@ const Section5 = () => {
               row.map((piece, colIndex) => (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className={`chess-square ${(rowIndex + colIndex) % 2 === 0 ? 'light' : 'dark'}`}
+                  className={`chess-square ${(rowIndex + colIndex) % 2 === 0 ? 'light' : 'dark'} ${
+                    selectedSquare && selectedSquare.row === rowIndex && selectedSquare.col === colIndex ? 'selected' : ''
+                  }`}
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
+                  onClick={() => handleSquareClick(rowIndex, colIndex)}
+                  onTouchEnd={(e) => handleTouchEnd(e, rowIndex, colIndex)}
                 >
                   {piece && (
                     <div
                       className={`chess-piece ${piece.startsWith('b') ? 'draggable' : ''}`}
                       draggable={piece.startsWith('b') && gameState === 'playing'}
                       onDragStart={(e) => handleDragStart(e, rowIndex, colIndex)}
+                      onTouchStart={(e) => handleTouchStart(e, rowIndex, colIndex)}
                     >
                       {pieceSymbols[piece]}
                     </div>

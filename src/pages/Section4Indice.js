@@ -35,13 +35,13 @@ const Section4Indice = () => {
             <div className="food-choices">
               <div className="food-item">
                 <div className="image-container">
-                  <img src="/poutine.jpg" alt="Poutine" className="food-image" />
+                  <img src={`${process.env.PUBLIC_URL}/poutine.jpg`} alt="Poutine" className="food-image" />
                   <div className="emoji-overlay check">✓</div>
                 </div>
               </div>
               <div className="food-item">
                 <div className="image-container">
-                  <img src="/charcuterie.jpg" alt="Charcuterie" className="food-image" />
+                  <img src={`${process.env.PUBLIC_URL}/charcuterie.jpg`} alt="Charcuterie" className="food-image" />
                   <div className="emoji-overlay cross">✕</div>
                 </div>
               </div>

@@ -9,14 +9,14 @@ const Section4 = () => {
   const [answer, setAnswer] = useState('');
   const [isShaking, setIsShaking] = useState(false);
 
-  const correctAnswer = 'montréal';
+  const correctAnswer = ['montréal', 'Montréal', 'montreal', 'Montreal'];
 
   const handleSubmit = (e) => {
     e.preventDefault();
     
     const userAnswer = answer.toLowerCase().trim();
     
-    if (userAnswer === correctAnswer) {
+    if (correctAnswer.includes(userAnswer)) {
       // Bonne réponse
       unlockSection('section4-indice');
       navigate('/section4-indice');

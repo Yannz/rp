@@ -39,7 +39,7 @@ const Section6Indice = () => {
         
         {showPassport && (
           <div className="passport-container">
-            <img src="/passeport.png" alt="Passeport" className="passport-image" />
+            <img src={`${process.env.PUBLIC_URL}/passeport.png`} alt="Passeport" className="passport-image" />
           </div>
         )}
 

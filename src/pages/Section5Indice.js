@@ -37,7 +37,7 @@ const Section5Indice = () => {
         <p>Voici l'indice suivant</p>
         {showPlane && (
           <div className="plane-container">
-            <img src="/avion.png" alt="Avion Air France" className="plane-image" />
+            <img src={`${process.env.PUBLIC_URL}/avion.png`} alt="Avion Air France" className="plane-image" />
             <div className="red-cross">
               <div className="cross-line cross-line-1"></div>
               <div className="cross-line cross-line-2"></div>

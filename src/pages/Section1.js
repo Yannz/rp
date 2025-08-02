@@ -39,12 +39,6 @@ const Section1 = () => {
           </button>
         </div>
       </div>
-      
-      <div className="section1-footer">
-        <p className="section1-hint">
-          💡 Astuce : Chaque action que vous effectuez débloque la suite de l'histoire
-        </p>
-      </div>
     </div>
   );
 };
