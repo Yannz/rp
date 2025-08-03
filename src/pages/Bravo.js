@@ -13,6 +13,15 @@ const Bravo = () => {
           <p>Les indices n'étaient pas faciles mais on avait 100% confiance en vous.</p>
           <p>C'est prévu pour Mars 2026 et ce sera un ou une Canadien(ne)</p>
         </div>
+
+        <div className="photo-container">
+          <img 
+            src={`${process.env.PUBLIC_URL}/ali_ - 1 (1).jpeg`} 
+            alt="Échographie" 
+            className="ultrasound-image" 
+          />
+        </div>
+
         <div className="celebration-hearts">
           <span>💕</span>
           <span>🤰</span>
